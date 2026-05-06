@@ -16,7 +16,7 @@ const sections = [
   {
     title: "The Solution",
     content:
-      "Growlanzer is a full-stack freelancer marketplace — live at growlanzer.com — with Firebase-powered authentication, real-time chat, profile-based freelancer discovery, and an end-to-end project workflow from posting to delivery. Built with Next.js and TypeScript for a fast, type-safe production experience.",
+      "Growlanzer is a full-stack freelancer marketplace — live at freelancer-99659.web.app — with Firebase-powered authentication, real-time chat, profile-based freelancer discovery, and an end-to-end project workflow from posting to delivery. Built with Next.js and TypeScript for a fast, type-safe production experience.",
   },
   {
     title: "Key Features",
@@ -27,7 +27,7 @@ const sections = [
       "Project posting and application workflow with status tracking",
       "Admin panel for freelancer verification and project moderation",
       "Responsive UI built entirely with Tailwind CSS — mobile-first",
-      "Deployed and live at growlanzer.com with Vercel CI/CD",
+      "Deployed and live at freelancer-99659.web.app with Firebase Hosting",
     ],
   },
   {
@@ -48,13 +48,13 @@ const sections = [
       "Implementing role-based access control (admin/client/freelancer) with Firestore security rules",
       "Optimistic UI for chat messages so the UX feels instant despite async writes",
       "Managing Firebase listener lifecycles in React without stale closures or memory leaks",
-      "Deploying with Vercel and configuring environment-based Firebase project switching",
+      "Deploying with Firebase Hosting and configuring environment-based Firebase project switching",
     ],
   },
   {
     title: "Results & Improvements",
     content: [
-      "Successfully deployed and live at growlanzer.com — real users onboarded",
+      "Successfully deployed and live at freelancer-99659.web.app — real users onboarded",
       "End-to-end project flow from registration to project completion working in production",
       "Planned: Razorpay payment integration for milestone-based freelancer payouts",
       "Planned: AI-powered freelancer-project matching using skill embedding similarity",
@@ -69,11 +69,12 @@ export default function GrowlanzerPage() {
     <CaseStudyLayout
       title="Growlanzer"
       tagline="Live freelancer marketplace built and deployed with Next.js and Firebase."
-      badge="🚀 Live · growlanzer.com"
+      badge="🚀 Live · freelancer-99659.web.app"
       tech={["Next.js", "React", "TypeScript", "Tailwind CSS", "Firebase"]}
       sections={sections}
       accentColor="indigo"
       imageSlot={<GrowlanzerImage />}
+      liveUrl="https://freelancer-99659.web.app"
     />
   );
 }

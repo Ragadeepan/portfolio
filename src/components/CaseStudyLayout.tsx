@@ -18,6 +18,7 @@ interface CaseStudyProps {
   sections: Section[];
   accentColor: string;
   imageSlot: React.ReactNode;
+  liveUrl?: string;
 }
 
 export default function CaseStudyLayout({
@@ -28,6 +29,7 @@ export default function CaseStudyLayout({
   sections,
   accentColor,
   imageSlot,
+  liveUrl = "#",
 }: CaseStudyProps) {
   const accentClass =
     accentColor === "cyan"
@@ -116,8 +118,10 @@ export default function CaseStudyLayout({
             className="flex gap-3 flex-wrap"
           >
             <a
-              href="#"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-medium rounded-xl text-sm shadow-lg shadow-cyan-500/20"
+              href={liveUrl}
+              target={liveUrl !== "#" ? "_blank" : undefined}
+              rel={liveUrl !== "#" ? "noopener noreferrer" : undefined}
+              className={`inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-medium rounded-xl text-sm shadow-lg shadow-cyan-500/20 ${liveUrl === "#" ? "opacity-40 pointer-events-none" : ""}`}
             >
               <ExternalLink size={14} />
               Live Demo

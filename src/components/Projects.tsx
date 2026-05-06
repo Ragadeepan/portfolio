@@ -21,7 +21,7 @@ const projects = [
   {
     slug: "resume-iq",
     title: "Resume IQ",
-    liveUrl: "#",
+    liveUrl: "https://resume-iq-client-seven.vercel.app",
     tagline: "AI-powered ATS resume analyzer with skill gap detection.",
     description:
       "Analyzes resumes for ATS compatibility, detects skill gaps against job requirements, scores keyword density, and generates structured AI improvement suggestions — all in seconds.",
@@ -37,10 +37,10 @@ const projects = [
   {
     slug: "growlanzer",
     title: "Growlanzer",
-    liveUrl: "https://growlanzer.com",
+    liveUrl: "https://freelancer-99659.web.app",
     tagline: "Freelancer marketplace with live URL, real users, and admin workflows.",
     description:
-      "Full-stack freelancer platform with role-based auth, real-time chat, project posting & bidding, admin approval system, and complete CI/CD deployment pipeline. Live at growlanzer.com.",
+      "Full-stack freelancer platform with role-based auth, real-time chat, project posting & bidding, admin approval system, and complete CI/CD deployment pipeline. Live at freelancer-99659.web.app.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Firebase"],
     image: GrowlanzerImage,
     accent: "indigo" as AccentKey,

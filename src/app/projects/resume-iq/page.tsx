@@ -73,6 +73,7 @@ export default function ResumeIQPage() {
       sections={sections}
       accentColor="indigo"
       imageSlot={<ResumeIQImage />}
+      liveUrl="https://resume-iq-client-seven.vercel.app"
     />
   );
 }
