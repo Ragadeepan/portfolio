@@ -5,26 +5,66 @@ import { ExternalLink, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRef, MouseEvent } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { GrowlanzerImage, AIExpenseTrackerImage, GymAppImage } from "./ProjectImages";
+import { ResumeIQImage, GrowlanzerImage, MeetingAppImage, AIExpenseTrackerImage } from "./ProjectImages";
 import { GithubIcon } from "./SocialIcons";
 
+type AccentKey = "violet" | "indigo" | "blue" | "cyan";
+
+const accentMap: Record<AccentKey, { text: string; border: string; hover: string; badgeBg: string; badgeBorder: string }> = {
+  violet: { text: "text-violet-400", border: "border-violet-400/20", hover: "hover:bg-violet-400/8", badgeBg: "bg-violet-400/8", badgeBorder: "border-violet-400/30" },
+  indigo: { text: "text-indigo-400", border: "border-indigo-400/20", hover: "hover:bg-indigo-400/8", badgeBg: "bg-indigo-400/8", badgeBorder: "border-indigo-400/30" },
+  blue:   { text: "text-blue-400",   border: "border-blue-400/20",   hover: "hover:bg-blue-400/8",   badgeBg: "bg-blue-400/8",   badgeBorder: "border-blue-400/30"   },
+  cyan:   { text: "text-cyan-400",   border: "border-cyan-400/20",   hover: "hover:bg-cyan-400/8",   badgeBg: "bg-cyan-400/8",   badgeBorder: "border-cyan-400/30"   },
+};
+
 const projects = [
+  {
+    slug: "resume-iq",
+    title: "Resume IQ",
+    liveUrl: "#",
+    tagline: "AI-powered ATS resume analyzer with skill gap detection.",
+    description:
+      "Analyzes resumes for ATS compatibility, detects skill gaps against job requirements, scores keyword density, and generates structured AI improvement suggestions — all in seconds.",
+    tech: ["Next.js", "Node.js", "OpenAI API", "PostgreSQL"],
+    image: ResumeIQImage,
+    accent: "violet" as AccentKey,
+    gradient: "from-violet-500/20 to-purple-500/10",
+    cardBorder: "border-violet-500/20",
+    shadowColor: "rgba(167,139,250,0.15)",
+    badge: "🤖 AI · ATS Analyzer",
+    featured: false,
+  },
   {
     slug: "growlanzer",
     title: "Growlanzer",
     liveUrl: "https://growlanzer.com",
     tagline: "Freelancer marketplace with live URL, real users, and admin workflows.",
     description:
-      "Full-stack freelancer platform with Firebase authentication, real-time chat, admin approval system, and complete deployment pipeline. Currently live at growlanzer.com.",
+      "Full-stack freelancer platform with role-based auth, real-time chat, project posting & bidding, admin approval system, and complete CI/CD deployment pipeline. Live at growlanzer.com.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Firebase"],
     image: GrowlanzerImage,
-    accent: "indigo",
+    accent: "indigo" as AccentKey,
     gradient: "from-indigo-500/20 to-purple-500/10",
-    border: "border-indigo-500/20",
+    cardBorder: "border-indigo-500/20",
     shadowColor: "rgba(129,140,248,0.15)",
     badge: "🚀 Live · Deployed",
-    badgeColor: "text-indigo-400 border-indigo-400/30 bg-indigo-400/8",
     featured: true,
+  },
+  {
+    slug: "meeting-app",
+    title: "Real-Time Meeting App",
+    liveUrl: "#",
+    tagline: "Lightweight WebRTC video platform with real-time session management.",
+    description:
+      "Fast, browser-based video conferencing built on WebRTC — no plugins needed. Features real-time multi-participant video/audio, session controls, interactive UI, and Firebase-backed room management.",
+    tech: ["React", "WebRTC", "Firebase"],
+    image: MeetingAppImage,
+    accent: "blue" as AccentKey,
+    gradient: "from-blue-500/20 to-cyan-500/10",
+    cardBorder: "border-blue-500/20",
+    shadowColor: "rgba(96,165,250,0.15)",
+    badge: "📹 WebRTC · Real-Time",
+    featured: false,
   },
   {
     slug: "ai-expense-tracker",
@@ -32,32 +72,14 @@ const projects = [
     liveUrl: "#",
     tagline: "Chatbot-powered expense system with auto-categorization via OpenAI.",
     description:
-      "Natural language expense tracking — type 'spent ₹450 on lunch' and the AI auto-categorizes, tracks, and generates spending insights. Built with Python and OpenAI API.",
+      "Natural language expense tracking — type 'spent ₹450 on lunch' and the AI auto-categorizes, tracks, and generates spending insights with visual breakdowns by category.",
     tech: ["Python", "OpenAI API", "Prompt Engineering"],
     image: AIExpenseTrackerImage,
-    accent: "cyan",
+    accent: "cyan" as AccentKey,
     gradient: "from-cyan-500/20 to-teal-500/10",
-    border: "border-cyan-500/20",
+    cardBorder: "border-cyan-500/20",
     shadowColor: "rgba(6,182,212,0.15)",
-    badge: "🤖 AI · Python",
-    badgeColor: "text-cyan-400 border-cyan-400/30 bg-cyan-400/8",
-    featured: false,
-  },
-  {
-    slug: "gym-app",
-    title: "Gym Management App",
-    liveUrl: "#",
-    tagline: "Full-stack gym system with member management and real-time tracking.",
-    description:
-      "Complete gym management solution with member directory, attendance tracking, subscription renewals, workout scheduling, and payment integration — all powered by Firebase real-time DB.",
-    tech: ["Next.js", "React", "TypeScript", "Firebase"],
-    image: GymAppImage,
-    accent: "purple",
-    gradient: "from-purple-500/20 to-indigo-500/10",
-    border: "border-purple-500/20",
-    shadowColor: "rgba(168,139,250,0.15)",
-    badge: "💪 SaaS · Dashboard",
-    badgeColor: "text-purple-400 border-purple-400/30 bg-purple-400/8",
+    badge: "💰 AI · Python",
     featured: false,
   },
 ];
@@ -68,13 +90,13 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 150, damping: 20 });
   const springY = useSpring(y, { stiffness: 150, damping: 20 });
-  const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-6, 6]);
   const glareX = useTransform(springX, [-0.5, 0.5], ["0%", "100%"]);
   const glareY = useTransform(springY, [-0.5, 0.5], ["0%", "100%"]);
   const glareOpacity = useTransform(
     [springX, springY],
-    ([lx, ly]: number[]) => Math.sqrt(lx * lx + ly * ly) * 0.15
+    ([lx, ly]: number[]) => Math.sqrt(lx * lx + ly * ly) * 0.12
   );
 
   const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -84,10 +106,7 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
     y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
-  const onMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const onMouseLeave = () => { x.set(0); y.set(0); };
 
   return (
     <motion.div
@@ -98,18 +117,13 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
       className={`relative ${className}`}
     >
       {children}
-      {/* Glare overlay */}
       <motion.div
         className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden"
         style={{ opacity: glareOpacity }}
       >
         <motion.div
           className="absolute w-32 h-32 rounded-full bg-white/20 blur-xl"
-          style={{
-            left: glareX,
-            top: glareY,
-            transform: "translate(-50%,-50%)",
-          }}
+          style={{ left: glareX, top: glareY, transform: "translate(-50%,-50%)" }}
         />
       </motion.div>
     </motion.div>
@@ -117,78 +131,106 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
 }
 
 function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
+  const ac = accentMap[project.accent];
+
   return (
-    <AnimatedSection delay={index * 0.13}>
+    <AnimatedSection delay={index * 0.1}>
       <TiltCard className="h-full">
         <motion.div
-          whileHover={{ y: -8 }}
+          whileHover={{ y: -6 }}
           transition={{ type: "spring", stiffness: 280, damping: 22 }}
-          className={`group relative glass rounded-2xl overflow-hidden border ${project.border} h-full flex flex-col`}
-          style={{ boxShadow: `0 8px 40px ${project.shadowColor}, 0 0 0 1px ${project.border.replace("border-", "").replace("/20", "/10")}` }}
+          className={`group relative glass rounded-2xl overflow-hidden border ${project.cardBorder} h-full flex flex-col`}
+          style={{ boxShadow: `0 8px 40px ${project.shadowColor}` }}
         >
-          {/* Project image */}
+          {/* Image */}
           <div className="relative overflow-hidden bg-[#040d1a] h-[200px] flex-shrink-0">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              whileHover={{ scale: 1.04 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
               className="w-full h-full"
             >
               <project.image />
             </motion.div>
 
-            {/* Image overlay on hover */}
+            {/* Gradient overlay on hover */}
             <div
               className={`absolute inset-0 bg-gradient-to-t ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
             />
 
+            {/* Hover overlay with quick-action buttons */}
+            <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
+              {project.liveUrl !== "#" && (
+                <motion.a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-md border border-white/20 rounded-lg text-white text-xs font-medium"
+                >
+                  <ExternalLink size={11} /> Live
+                </motion.a>
+              )}
+              <motion.a
+                href="https://github.com/Ragadeepan"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-md border border-white/20 rounded-lg text-white text-xs font-medium"
+              >
+                <GithubIcon size={11} /> GitHub
+              </motion.a>
+            </div>
+
             {/* Badge */}
             <div className="absolute top-3 left-3">
-              <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-semibold border ${project.badgeColor}`}>
+              <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-semibold border ${ac.badgeBg} ${ac.badgeBorder} ${ac.text}`}>
                 {project.badge}
               </span>
             </div>
 
-            {/* Featured dot */}
+            {/* Live dot */}
             {project.featured && (
               <div className="absolute top-3 right-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50">
+                <div className="relative w-2.5 h-2.5">
                   <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75" />
+                  <div className="relative w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50" />
                 </div>
               </div>
             )}
           </div>
 
           {/* Content */}
-          <div className="p-6 flex flex-col flex-1">
-            <h3 className="text-[1.15rem] font-bold text-white mb-1.5 group-hover:text-white transition-colors">
+          <div className="p-5 flex flex-col flex-1">
+            <h3 className="text-[1.05rem] font-bold text-white mb-1 tracking-tight">
               {project.title}
             </h3>
-            <p className={`text-sm font-semibold mb-3 ${
-              project.accent === "cyan" ? "text-cyan-400" :
-              project.accent === "indigo" ? "text-indigo-400" : "text-purple-400"
-            }`}>
+            <p className={`text-xs font-semibold mb-3 ${ac.text}`}>
               {project.tagline}
             </p>
-            <p className="text-slate-400 text-[13px] leading-relaxed mb-5 flex-1">{project.description}</p>
+            <p className="text-slate-400 text-[12.5px] leading-relaxed mb-4 flex-1">
+              {project.description}
+            </p>
 
             {/* Tech badges */}
-            <div className="flex flex-wrap gap-1.5 mb-5">
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {project.tech.map((t) => (
-                <span key={t} className="tech-badge text-[11px]">{t}</span>
+                <span key={t} className="tech-badge text-[10.5px]">{t}</span>
               ))}
             </div>
 
-            {/* Action buttons */}
-            <div className="flex items-center gap-2 flex-wrap">
+            {/* Action row */}
+            <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-white/5">
               <motion.a
                 href={project.liveUrl}
                 target={project.liveUrl !== "#" ? "_blank" : undefined}
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/6 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-lg text-white text-xs font-medium transition-all"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-lg text-white text-[11px] font-medium transition-all ${project.liveUrl === "#" ? "opacity-40 pointer-events-none" : ""}`}
               >
-                <ExternalLink size={11} />
+                <ExternalLink size={10} />
                 Live
               </motion.a>
               <motion.a
@@ -197,23 +239,19 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/6 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-lg text-white text-xs font-medium transition-all"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-lg text-white text-[11px] font-medium transition-all"
               >
-                <GithubIcon size={11} />
+                <GithubIcon size={10} />
                 GitHub
               </motion.a>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} className="ml-auto">
                 <Link
                   href={`/projects/${project.slug}`}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all border ${
-                    project.accent === "cyan" ? "text-cyan-400 border-cyan-400/20 hover:bg-cyan-400/8" :
-                    project.accent === "indigo" ? "text-indigo-400 border-indigo-400/20 hover:bg-indigo-400/8" :
-                    "text-purple-400 border-purple-400/20 hover:bg-purple-400/8"
-                  }`}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all border ${ac.text} ${ac.border} ${ac.hover}`}
                 >
-                  <BookOpen size={11} />
+                  <BookOpen size={10} />
                   Case Study
-                  <ArrowRight size={10} />
+                  <ArrowRight size={9} />
                 </Link>
               </motion.div>
             </div>
@@ -242,8 +280,11 @@ export default function Projects() {
           </p>
         </AnimatedSection>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1200px" }}>
+        {/* 4-card responsive grid */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5"
+          style={{ perspective: "1200px" }}
+        >
           {projects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}
