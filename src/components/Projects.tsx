@@ -53,7 +53,7 @@ const projects = [
   {
     slug: "meeting-app",
     title: "Real-Time Meeting App",
-    liveUrl: "#",
+    liveUrl: "https://visionmeet-75722.web.app",
     tagline: "Lightweight WebRTC video platform with real-time session management.",
     description:
       "Fast, browser-based video conferencing built on WebRTC — no plugins needed. Features real-time multi-participant video/audio, session controls, interactive UI, and Firebase-backed room management.",
@@ -69,7 +69,7 @@ const projects = [
   {
     slug: "ai-expense-tracker",
     title: "AI Expense Tracker",
-    liveUrl: "#",
+    liveUrl: "https://www.getharvest.com/",
     tagline: "Chatbot-powered expense system with auto-categorization via OpenAI.",
     description:
       "Natural language expense tracking — type 'spent ₹450 on lunch' and the AI auto-categorizes, tracks, and generates spending insights with visual breakdowns by category.",
