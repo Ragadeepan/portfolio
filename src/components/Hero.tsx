@@ -304,7 +304,8 @@ export default function Hero() {
               className="flex flex-wrap items-center gap-3 justify-center lg:justify-start mb-7"
             >
               <motion.a
-                href="#"
+                href="/Ragadeepan_R_Resume_2026.pdf"
+                download
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 className="relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-shadow text-sm overflow-hidden group"

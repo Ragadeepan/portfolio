@@ -232,7 +232,8 @@ export default function Navbar() {
               <div className="px-5 pb-8 pt-2">
                 <div className="h-px bg-gradient-to-r from-transparent via-white/8 to-transparent mb-5" />
                 <a
-                  href="#"
+                  href="/Ragadeepan_R_Resume_2026.pdf"
+                  download
                   className="relative block w-full text-center px-4 py-3.5 text-sm font-bold text-white bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-xl shadow-lg shadow-cyan-500/25 overflow-hidden group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-active:translate-x-full transition-transform duration-500" />
