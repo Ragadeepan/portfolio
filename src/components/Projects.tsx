@@ -1,14 +1,21 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ExternalLink, BookOpen, ArrowRight, ArrowUpRight } from "lucide-react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ExternalLink, BookOpen, ArrowRight, ArrowUpRight, Heart } from "lucide-react";
 import Link from "next/link";
-import { useRef, MouseEvent } from "react";
+import { useEffect, useRef, useState, MouseEvent } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { ResumeIQImage, FreelancerImage, MeetingAppImage, AIExpenseTrackerImage } from "./ProjectImages";
+import {
+  ResumeIQImage,
+  FreelancerImage,
+  MarketplaceDashboardImage,
+  MeetingAppImage,
+  AIExpenseTrackerImage,
+} from "./ProjectImages";
 import { GithubIcon } from "./SocialIcons";
 
 type AccentKey = "violet" | "indigo" | "blue" | "cyan";
+type ProjectImage = React.ComponentType;
 
 const accentMap: Record<AccentKey, {
   text: string; border: string; hover: string;
@@ -47,7 +54,8 @@ const projects = [
     description:
       "Analyzes resumes for ATS compatibility, detects skill gaps against job requirements, scores keyword density, and generates structured AI improvement suggestions — all in seconds.",
     tech: ["Next.js", "Node.js", "OpenAI API", "PostgreSQL"],
-    image: ResumeIQImage,
+    images: [ResumeIQImage],
+    likes: 128,
     accent: "violet" as AccentKey,
     cardBorder: "border-violet-500/18",
     badge: "🤖 AI · ATS Analyzer",
@@ -63,7 +71,8 @@ const projects = [
     description:
       "Connects clients and freelancers with job posting, ranked proposals, project management, escrow-style payments, milestone tracking, and secure delivery workflows.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
-    image: FreelancerImage,
+    images: [FreelancerImage, MarketplaceDashboardImage],
+    likes: 214,
     accent: "indigo" as AccentKey,
     cardBorder: "border-indigo-500/18",
     badge: "Live · Marketplace",
@@ -78,7 +87,8 @@ const projects = [
     description:
       "Browser-based video conferencing built on WebRTC — no plugins needed. Features real-time multi-participant video/audio, session controls, and Firebase-backed room management.",
     tech: ["React", "WebRTC", "Firebase"],
-    image: MeetingAppImage,
+    images: [MeetingAppImage],
+    likes: 96,
     accent: "blue" as AccentKey,
     cardBorder: "border-blue-500/18",
     badge: "📹 WebRTC · Real-Time",
@@ -93,13 +103,127 @@ const projects = [
     description:
       "Natural language expense tracking — type 'spent ₹450 on lunch' and the AI auto-categorizes, tracks, and generates spending insights with visual breakdowns by category.",
     tech: ["Python", "OpenAI API", "Prompt Engineering"],
-    image: AIExpenseTrackerImage,
+    images: [AIExpenseTrackerImage],
+    likes: 74,
     accent: "cyan" as AccentKey,
     cardBorder: "border-cyan-500/18",
     badge: "💰 AI · Python",
     featured: false,
   },
 ];
+
+function ProjectImageSlider({
+  images,
+  accent,
+}: {
+  images: ProjectImage[];
+  accent: ReturnType<typeof getAccent>;
+}) {
+  const [active, setActive] = useState(0);
+  const hasSlides = images.length > 1;
+  const ActiveImage = images[active];
+
+  useEffect(() => {
+    if (!hasSlides) return;
+    const timer = window.setInterval(() => {
+      setActive((current) => (current + 1) % images.length);
+    }, 3200);
+    return () => window.clearInterval(timer);
+  }, [hasSlides, images.length]);
+
+  return (
+    <div className="relative w-full h-full">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, x: hasSlides ? 26 : 0, scale: 1.02 }}
+          animate={{
+            opacity: 1,
+            x: 0,
+            scale: hasSlides ? 1 : [1, 1.035, 1],
+          }}
+          exit={{ opacity: 0, x: hasSlides ? -26 : 0, scale: 0.98 }}
+          transition={{
+            opacity: { duration: 0.35 },
+            x: { duration: 0.45, ease: "easeOut" },
+            scale: hasSlides
+              ? { duration: 0.45, ease: "easeOut" }
+              : { duration: 6, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="absolute inset-0"
+        >
+          <ActiveImage />
+        </motion.div>
+      </AnimatePresence>
+
+      {hasSlides && (
+        <div className="absolute bottom-3.5 left-3.5 z-20 flex items-center gap-1.5">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`Show project image ${i + 1}`}
+              className={`h-1.5 rounded-full border transition-all ${
+                active === i ? `w-5 ${accent.badgeBg} ${accent.badgeBorder}` : "w-1.5 bg-white/25 border-white/20"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProjectLikeButton({
+  slug,
+  baseLikes,
+  accent,
+}: {
+  slug: string;
+  baseLikes: number;
+  accent: ReturnType<typeof getAccent>;
+}) {
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(baseLikes);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(`project-like-${slug}`);
+    if (stored === "true") {
+      setLiked(true);
+      setLikes(baseLikes + 1);
+    }
+  }, [baseLikes, slug]);
+
+  const toggleLike = () => {
+    const nextLiked = !liked;
+    setLiked(nextLiked);
+    setLikes(baseLikes + (nextLiked ? 1 : 0));
+    window.localStorage.setItem(`project-like-${slug}`, String(nextLiked));
+  };
+
+  return (
+    <motion.button
+      type="button"
+      onClick={toggleLike}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.94 }}
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold border transition-all ${
+        liked
+          ? `${accent.text} ${accent.border} ${accent.badgeBg}`
+          : "bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20 text-white"
+      }`}
+      aria-pressed={liked}
+    >
+      <Heart size={10} className={liked ? "fill-current" : ""} />
+      {likes}
+    </motion.button>
+  );
+}
+
+function getAccent(key: AccentKey) {
+  return accentMap[key];
+}
 
 function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -147,7 +271,7 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
 }
 
 function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
-  const ac = accentMap[project.accent];
+  const ac = getAccent(project.accent);
 
   return (
     <AnimatedSection delay={index * 0.08}>
@@ -175,7 +299,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="w-full h-full"
             >
-              <project.image />
+              <ProjectImageSlider images={project.images} accent={ac} />
             </motion.div>
 
             {/* Gradient overlay */}
@@ -270,6 +394,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
                 <GithubIcon size={10} />
                 Code
               </motion.a>
+              <ProjectLikeButton slug={project.slug} baseLikes={project.likes} accent={ac} />
               <motion.div whileHover={{ scale: 1.05 }} className="ml-auto">
                 <Link
                   href={`/projects/${project.slug}`}
