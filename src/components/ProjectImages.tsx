@@ -153,7 +153,96 @@ export function ResumeIQImage() {
   );
 }
 
-export function GrowlanzerImage() {
+export function FreelancerImage() {
+  return (
+    <svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs>
+        <linearGradient id="fl-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#20145a" />
+          <stop offset="48%" stopColor="#0c1930" />
+          <stop offset="100%" stopColor="#07505a" />
+        </linearGradient>
+        <linearGradient id="fl-title" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#7c6dff" />
+          <stop offset="100%" stopColor="#38d6ff" />
+        </linearGradient>
+        <linearGradient id="fl-button" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#7559ff" />
+          <stop offset="100%" stopColor="#33d4ff" />
+        </linearGradient>
+        <radialGradient id="fl-glow" cx="70%" cy="28%" r="52%">
+          <stop offset="0%" stopColor="rgba(34,211,238,0.22)" />
+          <stop offset="100%" stopColor="transparent" />
+        </radialGradient>
+        <pattern id="fl-grid" width="18" height="18" patternUnits="userSpaceOnUse">
+          <path d="M 18 0 L 0 0 0 18" fill="none" stroke="rgba(255,255,255,0.035)" strokeWidth="1" />
+        </pattern>
+        <filter id="fl-shadow">
+          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#000" floodOpacity="0.28" />
+        </filter>
+      </defs>
+
+      <rect width="640" height="360" fill="url(#fl-bg)" />
+      <rect width="640" height="360" fill="url(#fl-grid)" />
+      <rect width="640" height="360" fill="url(#fl-glow)" />
+
+      <line x1="26" y1="68" x2="614" y2="68" stroke="rgba(255,255,255,0.12)" />
+      <g transform="translate(38 25)">
+        <rect x="0" y="0" width="28" height="24" rx="6" fill="rgba(0,0,0,0.55)" />
+        <rect x="7" y="8" width="14" height="8" rx="2" fill="#7c6dff" />
+        <path d="M-2 10 L8 10 L8 16 Z" fill="#f8d24b" />
+        <text x="0" y="42" fill="rgba(255,255,255,0.8)" fontSize="12" fontFamily="Inter,sans-serif">Freelancer</text>
+      </g>
+
+      <text x="270" y="43" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontSize="10" fontFamily="Inter,sans-serif">Find Talent</text>
+      <text x="330" y="43" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontSize="10" fontFamily="Inter,sans-serif">Find Work</text>
+      <rect x="494" y="28" width="46" height="26" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)" />
+      <text x="517" y="45" textAnchor="middle" fill="white" fontSize="9" fontWeight="700" fontFamily="Inter,sans-serif">Log in</text>
+      <rect x="546" y="27" width="66" height="28" rx="12" fill="url(#fl-button)" />
+      <text x="579" y="45" textAnchor="middle" fill="white" fontSize="9" fontWeight="800" fontFamily="Inter,sans-serif">Get Started</text>
+
+      <rect x="232" y="104" width="176" height="20" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)" />
+      <circle cx="246" cy="114" r="3" fill="#34d399" />
+      <text x="320" y="118" textAnchor="middle" fill="rgba(255,255,255,0.74)" fontSize="8" letterSpacing="3" fontFamily="Inter,sans-serif">TRUSTED MARKETPLACE</text>
+
+      <text x="320" y="158" textAnchor="middle" fill="white" fontSize="34" fontWeight="900" fontFamily="Inter,sans-serif">
+        Hire proven freelancers and
+      </text>
+      <text x="320" y="198" textAnchor="middle" fill="url(#fl-title)" fontSize="38" fontWeight="900" fontFamily="Inter,sans-serif">
+        ship projects faster
+      </text>
+      <text x="320" y="226" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="11" fontFamily="Inter,sans-serif">
+        Connect with verified talent, compare proposals, and manage secure payouts.
+      </text>
+
+      <rect x="252" y="244" width="72" height="28" rx="12" fill="url(#fl-button)" />
+      <text x="288" y="262" textAnchor="middle" fill="white" fontSize="9" fontWeight="800" fontFamily="Inter,sans-serif">Hire Freelancers</text>
+      <rect x="334" y="244" width="70" height="28" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.18)" />
+      <text x="369" y="262" textAnchor="middle" fill="white" fontSize="9" fontWeight="700" fontFamily="Inter,sans-serif">Find Projects</text>
+
+      {[
+        { value: "48,000+", label: "Active freelancers" },
+        { value: "320,000+", label: "Projects completed" },
+        { value: "36 hrs", label: "Average hire time" },
+      ].map((stat, i) => (
+        <g key={stat.label} filter="url(#fl-shadow)">
+          <rect x={104 + i * 146} y="292" width="132" height="48" rx="12" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.13)" />
+          <text x={170 + i * 146} y="314" textAnchor="middle" fill="white" fontSize="15" fontWeight="900" fontFamily="Inter,sans-serif">{stat.value}</text>
+          <text x={170 + i * 146} y="332" textAnchor="middle" fill="rgba(255,255,255,0.54)" fontSize="8.5" fontFamily="Inter,sans-serif">{stat.label}</text>
+        </g>
+      ))}
+
+      {["Escrow-safe payments", "Live proposal tracking", "Admin-moderated quality"].map((tag, i) => (
+        <g key={tag}>
+          <rect x={172 + i * 108} y="348" width={i === 2 ? 110 : 96} height="16" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)" />
+          <text x={220 + i * 108} y="359" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="7" fontFamily="Inter,sans-serif">{tag}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+export function MarketplaceDashboardImage() {
   return (
     <svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
       <defs>
@@ -180,7 +269,7 @@ export function GrowlanzerImage() {
       ))}
       <rect x="0" y="0" width="175" height="360" fill="rgba(0,0,0,0.32)"/>
       <rect x="14" y="14" width="147" height="38" rx="8" fill="rgba(6,182,212,0.1)"/>
-      <text x="26" y="37" fill="rgba(6,182,212,0.95)" fontSize="13" fontWeight="800" fontFamily="Inter,sans-serif">Growlanzer</text>
+      <text x="26" y="37" fill="rgba(6,182,212,0.95)" fontSize="13" fontWeight="800" fontFamily="Inter,sans-serif">Freelancer</text>
       {["Dashboard","Freelancers","Projects","Payments","Settings"].map((item, i) => (
         <g key={item}>
           <rect x="14" y={66+i*42} width="147" height="34" rx="7" fill={i===0?"rgba(6,182,212,0.15)":"transparent"}/>

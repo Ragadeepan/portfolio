@@ -19,6 +19,7 @@ interface CaseStudyProps {
   accentColor: string;
   imageSlot: React.ReactNode;
   liveUrl?: string;
+  codeUrl?: string;
 }
 
 export default function CaseStudyLayout({
@@ -30,6 +31,7 @@ export default function CaseStudyLayout({
   accentColor,
   imageSlot,
   liveUrl = "#",
+  codeUrl = "https://github.com/Ragadeepan",
 }: CaseStudyProps) {
   const accentClass =
     accentColor === "cyan"
@@ -127,7 +129,7 @@ export default function CaseStudyLayout({
               Live Demo
             </a>
             <a
-              href="https://github.com/Ragadeepan"
+              href={codeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 glass border border-white/10 text-white font-medium rounded-xl text-sm"

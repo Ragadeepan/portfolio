@@ -5,7 +5,7 @@ import { ExternalLink, BookOpen, ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useRef, MouseEvent } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { ResumeIQImage, GrowlanzerImage, MeetingAppImage, AIExpenseTrackerImage } from "./ProjectImages";
+import { ResumeIQImage, FreelancerImage, MeetingAppImage, AIExpenseTrackerImage } from "./ProjectImages";
 import { GithubIcon } from "./SocialIcons";
 
 type AccentKey = "violet" | "indigo" | "blue" | "cyan";
@@ -54,18 +54,19 @@ const projects = [
     featured: false,
   },
   {
-    slug: "growlanzer",
+    slug: "freelancer",
     num: "02",
-    title: "Growlanzer",
+    title: "Freelancer",
     liveUrl: "https://freelancer-99659.web.app",
-    tagline: "Freelancer marketplace with live URL, real users, and admin workflows.",
+    codeUrl: "https://github.com/Ragadeepan/freelancer",
+    tagline: "Full-stack freelancer marketplace with admin-controlled project workflows.",
     description:
-      "Full-stack freelancer platform with role-based auth, real-time chat, project posting & bidding, admin approval system, and complete CI/CD deployment pipeline.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Firebase"],
-    image: GrowlanzerImage,
+      "Connects clients and freelancers with job posting, ranked proposals, project management, escrow-style payments, milestone tracking, and secure delivery workflows.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
+    image: FreelancerImage,
     accent: "indigo" as AccentKey,
     cardBorder: "border-indigo-500/18",
-    badge: "🚀 Live · Deployed",
+    badge: "Live · Marketplace",
     featured: true,
   },
   {
@@ -197,7 +198,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
                 </motion.a>
               )}
               <motion.a
-                href="https://github.com/Ragadeepan"
+                href={project.codeUrl ?? "https://github.com/Ragadeepan"}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
@@ -259,7 +260,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
                 Live
               </motion.a>
               <motion.a
-                href="https://github.com/Ragadeepan"
+                href={project.codeUrl ?? "https://github.com/Ragadeepan"}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
