@@ -15,14 +15,25 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Ragadeepan R — Frontend Engineer",
+  title: "Ragadeepan R — AI-Powered Full Stack Developer",
   description:
-    "Final-year developer building production-level full stack applications with clean architecture and advanced UI. Strong in frontend engineering with real-world project experience.",
-  keywords: ["Frontend Engineer", "Full Stack Developer", "React", "Next.js", "TypeScript", "Chennai"],
+    "AI-powered full stack developer building intelligent web applications, chatbot systems, and production-ready platforms with React, Next.js, Firebase, Python, and OpenAI integrations.",
+  keywords: [
+    "AI-Powered Full Stack Developer",
+    "Full Stack Developer",
+    "AI Developer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "OpenAI",
+    "Firebase",
+    "Chennai",
+  ],
   authors: [{ name: "Ragadeepan R" }],
   openGraph: {
-    title: "Ragadeepan R — Frontend Engineer",
-    description: "Building high-performance web applications with modern UI and real-world impact.",
+    title: "Ragadeepan R — AI-Powered Full Stack Developer",
+    description:
+      "Portfolio of Ragadeepan R, an AI-powered full stack developer building intelligent web apps, chatbot systems, and production-ready platforms.",
     type: "website",
   },
 };
